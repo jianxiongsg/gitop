@@ -40,7 +40,7 @@ export class GitOp{
                     return;
                 }
                 let version:string = JSON.parse(str).version;
-                resolve('version');
+                resolve(version);
             })
         })
     }
@@ -48,7 +48,19 @@ export class GitOp{
     setTag(path:string,v:string,m?:string){
         return new Promise((resolve,reject)=>{
             m = m || '.....version: ' + v;
-            this.run('git',['tag','-a','-m',m],path,(data:any,err:any)=>{
+            this.run('git',['tag','-a',v,'-m',m],path,(data:any,err:any)=>{
+                if(err){
+                   reject(err);
+                   return;
+                }
+                resolve(data)
+            })
+        })
+    }
+
+    showTag(path:string,v:string){
+        return new Promise((resolve,reject)=>{
+            this.run('git',['show',v],path,(data:any,err:any)=>{
                 if(err){
                    console.log('err',err);
                    reject(err);
@@ -250,6 +262,7 @@ export class GitOp{
             cb(data.toString(),null)
         })
         process.on('exit',(data:any)=>{
+            cb(data.toString(),null)
         })
     }
    

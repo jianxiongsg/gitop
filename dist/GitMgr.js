@@ -23,10 +23,21 @@ var GitMgr = /** @class */ (function () {
         var packagePath = path_1.default.join(this._path, 'package.json');
         this._gitOp.getVersion(packagePath).then(function (newV) {
             var v = newV;
+            console.log(v);
             if (!_this._preV || _this._preV != v) {
+                _this._preV = v;
+                console.log('this._path', _this._path);
                 _this._gitOp.add(_this._path).then(function () {
-                    _this._gitOp.commit(_this._path);
-                    _this._gitOp.setTag(_this._path, v);
+                    // this._gitOp.commit(this._path).then(()=>{
+                    //     this._gitOp.setTag(this._path,v).then(()=>{
+                    //         console.log('commit success ',v);
+                    //         // this._gitOp.showTag(this._path,v)
+                    //     }).catch((err:string)=>{
+                    //         console.log('err',err)
+                    //     });
+                    // }).catch((err:string)=>{
+                    //     console.log('err',err)
+                    // });
                 }).catch(function (err) {
                     console.log('err', err);
                 });

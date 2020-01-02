@@ -13,7 +13,6 @@ export class GitMgr{
         this._interval = interval;
         this._gitOp = new GitOp();
         this._preV = '';
-        
     }
 
     autoStart(){
@@ -23,17 +22,27 @@ export class GitMgr{
     }
 
     check(){
-        let packagePath = path.join(this._path,'package.json')
+        let packagePath = path.join(this._path,'package.json');
         this._gitOp.getVersion(packagePath).then((newV:unknown)=>{
             let v = newV as string;
+            console.log(v)
             if(!this._preV || this._preV != v){
+                this._preV = v;
+                console.log('this._path',this._path);
                 this._gitOp.add(this._path).then(()=>{
-                    this._gitOp.commit(this._path);
-                    this._gitOp.setTag(this._path,v);
+                    this._gitOp.commit(this._path).then(()=>{
+                        this._gitOp.setTag(this._path,v).then(()=>{
+                            console.log('commit success ',v);
+                            // this._gitOp.showTag(this._path,v)
+                        }).catch((err:string)=>{
+                            console.log('err',err)
+                        });
+                    }).catch((err:string)=>{
+                        console.log('err',err)
+                    });
                 }).catch((err:string)=>{
                     console.log('err',err)
                 });
-    
             }
         }).catch((err:string)=>{
             console.log('err',err)

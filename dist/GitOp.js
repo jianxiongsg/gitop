@@ -37,7 +37,7 @@ var GitOp = /** @class */ (function () {
                     return;
                 }
                 var version = JSON.parse(str).version;
-                resolve('version');
+                resolve(version);
             });
         });
     };
@@ -45,7 +45,19 @@ var GitOp = /** @class */ (function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             m = m || '.....version: ' + v;
-            _this.run('git', ['tag', '-a', '-m', m], path, function (data, err) {
+            _this.run('git', ['tag', '-a', v, '-m', m], path, function (data, err) {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                resolve(data);
+            });
+        });
+    };
+    GitOp.prototype.showTag = function (path, v) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.run('git', ['show', v], path, function (data, err) {
                 if (err) {
                     console.log('err', err);
                     reject(err);
@@ -235,6 +247,7 @@ var GitOp = /** @class */ (function () {
             cb(data.toString(), null);
         });
         process.on('exit', function (data) {
+            cb(data.toString(), null);
         });
     };
     /**

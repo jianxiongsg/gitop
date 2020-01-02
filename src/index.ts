@@ -1,8 +1,15 @@
 #!/usr/bin/env node
 import program from "commander";
 import { GitMgr } from "./GitMgr";
+import { GitOp } from "./GitOp";
 
 
+// let gitOP = new GitOp();
+// gitOP.add('D:/demos/preact_ts').then((data)=>{
+//     console.log('...data',data)
+// }).catch((err)=>{
+//     console.log('....err ',err)
+// })
 
 program
     .usage("<command> [options]")
@@ -20,14 +27,6 @@ if(!program.dirctory){
     gitMgr.autoStart();
 }
 
-
-// if(type === 'd'){
-
-// }else if(type === 't'){
-
-// }else{
-//     program.help();
-// }
 
 
 
