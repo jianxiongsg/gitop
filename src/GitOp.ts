@@ -36,18 +36,18 @@ export class GitOp{
         return new Promise((resolve,reject)=>{
             fs.readFile(path,'utf-8',(err,str)=>{
                 if(err){
-                    reject(err);
+                    reject(err.toString());
                     return;
                 }
-                let version = JSON.parse(str).version;
-                resolve(version);
+                let version:string = JSON.parse(str).version;
+                resolve('version');
             })
         })
     }
 
     setTag(path:string,v:string,m?:string){
         return new Promise((resolve,reject)=>{
-            m = m || 'version: ' + v;
+            m = m || '.....version: ' + v;
             this.run('git',['tag','-a','-m',m],path,(data:any,err:any)=>{
                 if(err){
                    console.log('err',err);

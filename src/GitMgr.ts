@@ -22,17 +22,23 @@ export class GitMgr{
         },this._interval)
     }
 
-    async check(){
+    check(){
         let packagePath = path.join(this._path,'package.json')
-        let newV = await this._gitOp.getVersion(packagePath)
-        if(!this._preV || this._preV != newV){
-            this._gitOp.add(this._path).then(()=>{
-                this._gitOp.commit(this._path)
-            }).catch((err:string)=>{
-                console.log('err',err)
-            });
-
-        }
+        this._gitOp.getVersion(packagePath).then((newV:unknown)=>{
+            let v = newV as string;
+            if(!this._preV || this._preV != v){
+                this._gitOp.add(this._path).then(()=>{
+                    this._gitOp.commit(this._path);
+                    this._gitOp.setTag(this._path,v);
+                }).catch((err:string)=>{
+                    console.log('err',err)
+                });
+    
+            }
+        }).catch((err:string)=>{
+            console.log('err',err)
+        })
+        
     }
 
 }

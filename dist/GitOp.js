@@ -33,18 +33,18 @@ var GitOp = /** @class */ (function () {
         return new Promise(function (resolve, reject) {
             fs_1.default.readFile(path, 'utf-8', function (err, str) {
                 if (err) {
-                    reject(err);
+                    reject(err.toString());
                     return;
                 }
                 var version = JSON.parse(str).version;
-                resolve(version);
+                resolve('version');
             });
         });
     };
     GitOp.prototype.setTag = function (path, v, m) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            m = m || 'version: ' + v;
+            m = m || '.....version: ' + v;
             _this.run('git', ['tag', '-a', '-m', m], path, function (data, err) {
                 if (err) {
                     console.log('err', err);
