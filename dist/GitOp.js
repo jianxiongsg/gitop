@@ -102,7 +102,6 @@ var GitOp = /** @class */ (function () {
                     return;
                 }
                 if (data) {
-                    console.log('success', data);
                     resolve(data);
                 }
             });

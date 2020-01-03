@@ -1,31 +1,31 @@
 import { GitOp } from "./GitOp";
 import path from 'path';
+import chokidar from 'chokidar';
 
 
 
 export class GitMgr{
     private _path:string;
-    private _interval:number;
     private _gitOp:GitOp;
     private _preV:string;
-    constructor(fpath:string,interval:number){
+    private _packagePath:string;
+    constructor(fpath:string){
         this._path = fpath;
-        this._interval = interval;
+        this._packagePath = path.join(this._path,'package.json');
         this._gitOp = new GitOp();
         this._preV = '';
     }
 
     autoStart(){
-        setInterval(()=>{
+        console.log('开始监听文件：'+this._packagePath);
+        chokidar.watch(this._packagePath).on('change',(path,status)=>{
             this.check();
-        },this._interval)
+        })
     }
 
     check(){
-        let packagePath = path.join(this._path,'package.json');
-        this._gitOp.getVersion(packagePath).then((newV:unknown)=>{
+        this._gitOp.getVersion(this._packagePath).then((newV:unknown)=>{
             let v = newV as string;
-            console.log(v)
             if(!this._preV || this._preV != v){
                 this._preV = v;
                 console.log('this._path',this._path);

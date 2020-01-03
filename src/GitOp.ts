@@ -107,7 +107,6 @@ export class GitOp{
                     return;
                 }
                 if(data){
-                    console.log('success',data);
                     resolve(data)
                 }
             })
