@@ -57,6 +57,18 @@ export class GitOp{
         })
     }
 
+    readFile(path:string):Promise<string>{
+        return new Promise((resolve,reject)=>{
+            fs.readFile(path,'utf-8',(err,data)=>{
+                if(err){
+                    reject(err);
+                    return;
+                }
+                resolve(data)
+            })
+        })
+    }
+
     setTag(path:string,v:string,m?:string){
         return new Promise((resolve,reject)=>{
             m = m || '.....version: ' + v;
