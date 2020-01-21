@@ -255,12 +255,11 @@ var GitOp = /** @class */ (function () {
         //     }
         // )
     };
-    GitOp.prototype.run = function (cmd, args, cwd, cb) {
+    GitOp.prototype.run = function (cmd, args, cwd, cb, onFinish) {
         var process = cross_spawn_1.default(cmd, args, {
             cwd: cwd,
         });
         process.stderr.on('data', function (err) {
-            // console.log('err',err)
             cb(null, err.toString());
         });
         process.stdout.on('data', function (data) {
@@ -268,6 +267,9 @@ var GitOp = /** @class */ (function () {
         });
         process.on('exit', function (data) {
             cb(data.toString(), null);
+            if (onFinish) {
+                onFinish();
+            }
         });
     };
     /**

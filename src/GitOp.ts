@@ -283,6 +283,7 @@ export class GitOp{
             cb(data.toString(),null)
         })
         process.on('exit',(data:any)=>{
+            cb(data.toString(),null)
             if(onFinish){
                 onFinish();
             }
