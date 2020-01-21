@@ -41,6 +41,28 @@ var GitOp = /** @class */ (function () {
             });
         });
     };
+    GitOp.prototype.writeFile = function (path, content) {
+        return new Promise(function (resolve, reject) {
+            fs_1.default.writeFile(path, content, function (err) {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                resolve(true);
+            });
+        });
+    };
+    GitOp.prototype.readFile = function (path) {
+        return new Promise(function (resolve, reject) {
+            fs_1.default.readFile(path, 'utf-8', function (err, data) {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                resolve(data);
+            });
+        });
+    };
     GitOp.prototype.setTag = function (path, v, m) {
         var _this = this;
         return new Promise(function (resolve, reject) {
