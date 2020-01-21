@@ -271,20 +271,26 @@ export class GitOp{
         // )
     }
 
-    run(cmd:string,args:string[],cwd:string,cb:(data:any,err:any)=>void){
+    run(cmd:string,args:string[],cwd:string,cb:(data:any,err:any)=>void,onFinish?:()=>void){
         let process:any = spawn(cmd,args,{
             cwd:cwd,
             // shell:true
         })
         process.stderr.on('data',(err:any)=>{
             // console.log('err',err)
-            cb(null,err.toString())
+            let errstr = err.toString()
+            cb(null,errstr)
         })
         process.stdout.on('data',(data:any)=>{
-            cb(data.toString(),null)
+            let datastr = data.toString()
+            cb(datastr,null)
         })
         process.on('exit',(data:any)=>{
-            cb(data.toString(),null)
+            let datastr = data.toString();
+            cb(datastr,null)
+            if(onFinish){
+                onFinish();
+            }
         })
 
     }
