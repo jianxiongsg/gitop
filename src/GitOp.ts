@@ -271,7 +271,7 @@ export class GitOp{
         // )
     }
 
-    run(cmd:string,args:string[],cwd:string,cb:(data:any,err:any)=>void){
+    run(cmd:string,args:string[],cwd:string,cb:(data:any,err:any)=>void,onFinish?:()=>void){
         let process:any = spawn(cmd,args,{
             cwd:cwd,
             // shell:true
@@ -283,7 +283,9 @@ export class GitOp{
             cb(data.toString(),null)
         })
         process.on('exit',(data:any)=>{
-            cb(data.toString(),null)
+            if(onFinish){
+                onFinish();
+            }
         })
 
     }
