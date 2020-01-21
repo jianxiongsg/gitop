@@ -279,7 +279,6 @@ export class GitOp{
         process.stderr.on('data',(err:any)=>{
             // console.log('err',err)
             cb(null,err.toString())
-            // throw new Error(err.toString())
         })
         process.stdout.on('data',(data:any)=>{
             cb(data.toString(),null)
