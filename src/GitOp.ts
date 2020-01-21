@@ -45,6 +45,18 @@ export class GitOp{
         })
     }
 
+    writeFile(path:string,content:string){
+        return new Promise((resolve,reject)=>{
+            fs.writeFile(path,content,(err:any)=>{
+                if(err){
+                    reject(err);
+                    return;
+                }
+                resolve(true);
+            })
+        })
+    }
+
     setTag(path:string,v:string,m?:string){
         return new Promise((resolve,reject)=>{
             m = m || '.....version: ' + v;
@@ -264,6 +276,8 @@ export class GitOp{
             cb(data.toString(),null)
         })
     }
+
+    
    
 
 
