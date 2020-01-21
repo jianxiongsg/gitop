@@ -4,8 +4,6 @@ import { GitMgr } from "./GitMgr";
 import { GitOp } from "./GitOp";
 
 
-
-
 program
     .usage("<command> [options]")
     .option("-v, --verbose", "显示详细执行过程")
