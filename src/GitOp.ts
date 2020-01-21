@@ -277,6 +277,7 @@ export class GitOp{
             // shell:true
         })
         process.stderr.on('data',(err:any)=>{
+            
             cb(null,err.toString())
         })
         process.stdout.on('data',(data:any)=>{
