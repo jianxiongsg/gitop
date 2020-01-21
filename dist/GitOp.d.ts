@@ -54,7 +54,7 @@ export declare class GitOp {
      */
     listHistory(path: string): Promise<HistoryParams[]>;
     getCurBranch(path: string, cb: (branch: any) => void): void;
-    run(cmd: string, args: string[], cwd: string, cb: (data: any, err: any) => void): void;
+    run(cmd: string, args: string[], cwd: string, cb: (data: any, err: any) => void, onFinish?: () => void): void;
     /**
      * 转换 git log
      *

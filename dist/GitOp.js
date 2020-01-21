@@ -255,19 +255,25 @@ var GitOp = /** @class */ (function () {
         //     }
         // )
     };
-    GitOp.prototype.run = function (cmd, args, cwd, cb) {
+    GitOp.prototype.run = function (cmd, args, cwd, cb, onFinish) {
         var process = cross_spawn_1.default(cmd, args, {
             cwd: cwd,
         });
         process.stderr.on('data', function (err) {
             // console.log('err',err)
-            cb(null, err.toString());
+            var errstr = err.toString();
+            cb(null, errstr);
         });
         process.stdout.on('data', function (data) {
-            cb(data.toString(), null);
+            var datastr = data.toString();
+            cb(datastr, null);
         });
         process.on('exit', function (data) {
-            cb(data.toString(), null);
+            var datastr = data.toString();
+            cb(datastr, null);
+            if (onFinish) {
+                onFinish();
+            }
         });
     };
     /**
