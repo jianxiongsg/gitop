@@ -236,7 +236,7 @@ var GitOp = /** @class */ (function () {
                 cb(null);
                 return;
             }
-            cb(stdout);
+            cb(stdout.replace('\t', '').split('\n')[0].trim());
         });
         // this.run('git',['branch'],path,(stdout:any,err:any)=>{
         //         if(err){
@@ -262,7 +262,6 @@ var GitOp = /** @class */ (function () {
         process.stderr.on('data', function (err) {
             // console.log('err',err)
             cb(null, err.toString());
-            // throw new Error(err.toString())
         });
         process.stdout.on('data', function (data) {
             cb(data.toString(), null);

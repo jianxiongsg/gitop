@@ -251,7 +251,7 @@ export class GitOp{
                 cb(null);
                 return;
             }
-            cb(stdout)
+            cb(stdout.replace('\t','').split('\n')[0].trim())
         })
         // this.run('git',['branch'],path,(stdout:any,err:any)=>{
         //         if(err){
@@ -286,7 +286,7 @@ export class GitOp{
         process.on('exit',(data:any)=>{
             cb(data.toString(),null)
         })
-        
+
     }
 
     
