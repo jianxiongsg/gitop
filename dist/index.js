@@ -6,12 +6,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var commander_1 = __importDefault(require("commander"));
 var GitMgr_1 = require("./GitMgr");
-// let gitOP = new GitOp();
-// gitOP.add('D:/demos/preact_ts').then((data)=>{
-//     console.log('...data',data)
-// }).catch((err)=>{
-//     console.log('....err ',err)
-// })
 commander_1.default
     .usage("<command> [options]")
     .option("-v, --verbose", "显示详细执行过程")
