@@ -9,6 +9,8 @@ export declare class GitOp {
      */
     init(path: string): Promise<{}>;
     getVersion(path: string): Promise<{}>;
+    writeFile(path: string, content: string): Promise<{}>;
+    readFile(path: string): Promise<string>;
     setTag(path: string, v: string, m?: string): Promise<{}>;
     showTag(path: string, v: string): Promise<{}>;
     /**
