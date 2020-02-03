@@ -259,6 +259,7 @@ var GitOp = /** @class */ (function () {
         var process = cross_spawn_1.default(cmd, args, {
             cwd: cwd,
         });
+        var isRunCb = false;
         process.stderr.on('data', function (err) {
             // console.log('err',err)
             var errstr = err.toString();
@@ -266,11 +267,14 @@ var GitOp = /** @class */ (function () {
         });
         process.stdout.on('data', function (data) {
             var datastr = data.toString();
+            isRunCb = true;
             cb(datastr, null, process);
         });
         process.on('exit', function (data) {
             var datastr = data.toString();
-            cb(datastr, null);
+            if (!isRunCb) {
+                cb(datastr, null);
+            }
             if (onFinish) {
                 onFinish();
             }

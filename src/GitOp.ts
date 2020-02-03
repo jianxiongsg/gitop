@@ -276,6 +276,7 @@ export class GitOp{
             cwd:cwd,
             // shell:true
         })
+        let isRunCb = false;
         process.stderr.on('data',(err:any)=>{
             // console.log('err',err)
             let errstr = err.toString()
@@ -283,11 +284,14 @@ export class GitOp{
         })
         process.stdout.on('data',(data:any)=>{
             let datastr = data.toString()
+            isRunCb = true;
             cb(datastr,null,process)
         })
         process.on('exit',(data:any)=>{
             let datastr = data.toString();
-            cb(datastr,null)
+            if(!isRunCb){
+                cb(datastr,null)
+            }
             if(onFinish){
                 onFinish();
             }
