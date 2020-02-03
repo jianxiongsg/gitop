@@ -246,7 +246,7 @@ export class GitOp{
     // $ git name-rev --name-only HEAD
 
     getCurBranch(path:string,cb:(branch:any)=>void){
-        this.run('git',['name-rev','--name-only','HEAD'],path,(stdout:any,err:any)=>{
+        this.run('git',['symbolic-ref','--short','HEAD'],path,(stdout:any,err:any)=>{
             if(err){
                 cb(null);
                 return;
@@ -271,7 +271,7 @@ export class GitOp{
         // )
     }
 
-    run(cmd:string,args:string[],cwd:string,cb:(data:any,err:any)=>void,onFinish?:()=>void){
+    run(cmd:string,args:string[],cwd:string,cb:(data:any,err:any,process?:any)=>void,onFinish?:()=>void,onWrite?:()=>void){
         let process:any = spawn(cmd,args,{
             cwd:cwd,
             // shell:true
@@ -283,7 +283,7 @@ export class GitOp{
         })
         process.stdout.on('data',(data:any)=>{
             let datastr = data.toString()
-            cb(datastr,null)
+            cb(datastr,null,process)
         })
         process.on('exit',(data:any)=>{
             let datastr = data.toString();
@@ -294,6 +294,7 @@ export class GitOp{
         })
 
     }
+
 
     
    

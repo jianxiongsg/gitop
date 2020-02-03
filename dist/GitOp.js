@@ -231,7 +231,7 @@ var GitOp = /** @class */ (function () {
     };
     // $ git name-rev --name-only HEAD
     GitOp.prototype.getCurBranch = function (path, cb) {
-        this.run('git', ['name-rev', '--name-only', 'HEAD'], path, function (stdout, err) {
+        this.run('git', ['symbolic-ref', '--short', 'HEAD'], path, function (stdout, err) {
             if (err) {
                 cb(null);
                 return;
@@ -255,7 +255,7 @@ var GitOp = /** @class */ (function () {
         //     }
         // )
     };
-    GitOp.prototype.run = function (cmd, args, cwd, cb, onFinish) {
+    GitOp.prototype.run = function (cmd, args, cwd, cb, onFinish, onWrite) {
         var process = cross_spawn_1.default(cmd, args, {
             cwd: cwd,
         });
@@ -266,7 +266,7 @@ var GitOp = /** @class */ (function () {
         });
         process.stdout.on('data', function (data) {
             var datastr = data.toString();
-            cb(datastr, null);
+            cb(datastr, null, process);
         });
         process.on('exit', function (data) {
             var datastr = data.toString();
